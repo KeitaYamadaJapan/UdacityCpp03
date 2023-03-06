@@ -59,6 +59,8 @@ ChatBot& ChatBot::operator=(const ChatBot& cb)
 {
     std::cout << "ChatBot copy operator" << std::endl;
 
+    if(this == &cb){ return *this; }
+
     _currentNode = cb._currentNode;
     _rootNode = cb._rootNode;
     _chatLogic = cb._chatLogic;
@@ -76,19 +78,28 @@ ChatBot::ChatBot(ChatBot &&cb)
     _chatLogic = cb._chatLogic;
     _image = new wxBitmap(*cb._image);
     _chatLogic -> SetChatbotHandle(this);
-    cb._image = NULL;
+    cb._image = nullptr;
+    cb._currentNode = nullptr;
+    cb._rootNode = nullptr;
+    cb._chatLogic = nullptr;
 }
 
 ChatBot &ChatBot::operator=(ChatBot &&cb)
 {
     std::cout << "ChatBot move operator" << std::endl;
 
+    if(this == &cb){ return *this; }
+    if(this->_image != nullptr) {delete this->_image;}
+
     _currentNode = cb._currentNode;
     _rootNode = cb._rootNode;
     _chatLogic = cb._chatLogic;
     _image = new wxBitmap(*cb._image);
     _chatLogic -> SetChatbotHandle(this); 
-    cb._image = NULL;
+    cb._image = nullptr;
+    cb._currentNode = nullptr;
+    cb._rootNode = nullptr;
+    cb._chatLogic = nullptr;
     return *this;
 }
 
